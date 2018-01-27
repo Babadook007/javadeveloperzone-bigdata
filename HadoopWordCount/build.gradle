@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+
+/* In this section you declare where to find the dependencies of your project*/
+repositories {
+   
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    
+    compile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: '2.2.0'
+	compile group: 'org.apache.hadoop', name: 'hadoop-common', version: '2.2.0'
+	compile group: 'org.apache.hadoop', name: 'hadoop-mapreduce-client-core', version: '2.2.0'
+	   
+}
+

@@ -1,11 +1,12 @@
 apply plugin: 'java'
 
+description """Hadoop MapReduce WordCount Example Using Java"""
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 /* In this section you declare where to find the dependencies of your project*/
 repositories {
-   
     jcenter()
     mavenCentral()
 }

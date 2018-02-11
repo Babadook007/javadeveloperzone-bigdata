@@ -28,7 +28,7 @@ public class ReduceSideJoinDriver extends Configured implements Tool {
 		
 		Job job = Job.getInstance(configuration);
 		
-		job.setJobName("Reduce Side join");
+		job.setJobName("Reduce Side Join Mapreduce example using Java");
 		
 		job.setJarByClass(ReduceSideJoinDriver.class);
 		
@@ -71,10 +71,10 @@ public class ReduceSideJoinDriver extends Configured implements Tool {
 		int result = ToolRunner.run(new Configuration(), new ReduceSideJoinDriver(), args);
 		
 		if (0 == result) {
-			System.out.println("Job Completed Successfully...");
+			System.out.println("Reduce Side Join Mapreduce example using Java Job Completed Successfully...");
 
 		} else {
-			System.out.println("Job Failed...");
+			System.out.println("Reduce Side Join Mapreduce example using Java Job Failed...");
 
 		}
 		}

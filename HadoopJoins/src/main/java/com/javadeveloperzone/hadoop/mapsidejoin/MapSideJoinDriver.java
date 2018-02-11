@@ -1,8 +1,5 @@
 package com.javadeveloperzone.hadoop.mapsidejoin;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
@@ -16,26 +13,20 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class MapSideJoinDriver extends Configured implements Tool {
 
-	private static String inputPath, outputPath, queueName,
-			referenceDatasetURI;
-
 	@Override
 	public int run(String[] args) throws Exception {
 
 		Configuration configuration = new Configuration();
 
-		// configuration.set("mapreduce.job.queuename", queueName);
+		Job job = Job.getInstance(configuration, "Map-side join with text lookup file in DistributedCache");
 
-		Job job = Job.getInstance(configuration,
-				"Map-side join with text lookup file in DistributedCache");
-
-		job.addCacheFile(new URI(referenceDatasetURI));
+		job.addCacheFile(new URI(args[0]));
 
 		job.setJarByClass(MapSideJoinDriver.class);
 
-		FileInputFormat.setInputPaths(job, new Path(inputPath));
+		FileInputFormat.setInputPaths(job, new Path(args[1]));
 
-		FileOutputFormat.setOutputPath(job, new Path(outputPath));
+		FileOutputFormat.setOutputPath(job, new Path(args[2]));
 
 		job.setMapperClass(MapSideJoinMapper.class);
 
@@ -50,10 +41,7 @@ public class MapSideJoinDriver extends Configured implements Tool {
 	public static void main(String[] args) {
 		try {
 
-			if (args.length == 1) {
-				/* initialize properties from file.. */
-
-				initializePropertiesFromPropertyFile(args[0]);
+			if (args.length == 3) {
 
 				int result = ToolRunner.run(new MapSideJoinDriver(), args);
 
@@ -66,58 +54,12 @@ public class MapSideJoinDriver extends Configured implements Tool {
 				}
 
 			} else {
-				System.out.printf("Usage <Control Properties>");
+				System.out.printf("Usage <LookUp_Reference_FilePath><InputPath><OutputPath>");
 			}
 
 		} catch (Exception exception) {
 			exception.printStackTrace();
 		}
-	}
-
-	private static void initializePropertiesFromPropertyFile(String sheetName) {
-
-		try {
-
-			BufferedReader reader = new BufferedReader(new FileReader(new File(
-					sheetName)));
-
-			String line;
-
-			while ((line = reader.readLine()) != null) {
-
-				// Skipping comment lines
-				if (!line.startsWith("##") && line.length() > 0) {
-
-					String key;
-
-					if (line.contains("=")) {
-
-						key = line.split("=")[0];
-
-						if (key.equalsIgnoreCase("INPUT_PATH")) {
-							inputPath = line.split("=")[1];
-						} else if (key.equalsIgnoreCase("OUTPUT_PATH")) {
-							outputPath = line.split("=")[1];
-						} else if (key
-								.equalsIgnoreCase("REFERENCE_DATASET_URI")) {
-							referenceDatasetURI = line.split("=")[1];
-						} else if (key.equalsIgnoreCase("QUEUE")) {
-							queueName = line.split("=")[1];
-						}
-
-					}
-
-				}
-
-			}
-			reader.close();
-
-		} catch (Exception exception) {
-
-			exception.printStackTrace();
-
-		}
-
 	}
 
 }

@@ -13,13 +13,13 @@ public class UserFileMapper extends Mapper<LongWritable, Text, LongWritable, Tex
 
 	private static final String fileTag="UD~";
 	
-	private static final String DATA_SEPERATOR=",";
+	private static final String DATA_SEPARATOR=",";
 	
 	public void map(LongWritable key, Text value,
 			Context context) throws IOException,InterruptedException
 	{
 		
-		String values[] = value.toString().split(DATA_SEPERATOR);
+		String values[] = value.toString().split(DATA_SEPARATOR);
 	
 		StringBuilder dataStringBuilder = new StringBuilder();
 		
@@ -29,7 +29,7 @@ public class UserFileMapper extends Mapper<LongWritable, Text, LongWritable, Tex
 			if(index != 0)
 			{
 				
-				dataStringBuilder.append(values[index].toString().trim() + DATA_SEPERATOR);
+				dataStringBuilder.append(values[index].toString().trim() + DATA_SEPARATOR);
 				
 			}
 			else

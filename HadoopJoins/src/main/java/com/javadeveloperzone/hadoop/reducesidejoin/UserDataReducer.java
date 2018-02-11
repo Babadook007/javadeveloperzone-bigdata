@@ -9,9 +9,9 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class UserDataReducer extends
 		Reducer<LongWritable, Text, LongWritable, Text> {
 
-	public static final String TAG_SEPERATOR = "~";
+	public static final String TAG_SEPARATOR = "~";
 
-	private static final String DATA_SEPERATOR = ",";
+	private static final String DATA_SEPARATOR = ",";
 
 	@Override
 	protected void reduce(LongWritable key, Iterable<Text> values,
@@ -29,7 +29,7 @@ public class UserDataReducer extends
 		for (Text txtValue : values) {
 			value = txtValue.toString();
 
-			spllitedValues = value.split(TAG_SEPERATOR);
+			spllitedValues = value.split(TAG_SEPARATOR);
 
 			tag = spllitedValues[0];
 
@@ -47,7 +47,7 @@ public class UserDataReducer extends
 
 		if (userDetails != null && addressDetails != null) {
 
-			data = userDetails + DATA_SEPERATOR + addressDetails;
+			data = userDetails + DATA_SEPARATOR + addressDetails;
 
 		} else if (userDetails == null) {
 

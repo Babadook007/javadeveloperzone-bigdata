@@ -6,8 +6,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
-public class UserDataReducer extends
-		Reducer<LongWritable, Text, LongWritable, Text> {
+public class UserDataReducer extends Reducer<LongWritable, Text, LongWritable, Text> {
 
 	public static final String TAG_SEPARATOR = "~";
 
@@ -15,8 +14,7 @@ public class UserDataReducer extends
 
 	@Override
 	protected void reduce(LongWritable key, Iterable<Text> values,
-			Reducer<LongWritable, Text, LongWritable, Text>.Context context)
-			throws IOException, InterruptedException {
+			Reducer<LongWritable, Text, LongWritable, Text>.Context context) throws IOException, InterruptedException {
 
 		String value;
 
@@ -27,6 +25,7 @@ public class UserDataReducer extends
 		String data = null, userDetails = null, addressDetails = null;
 
 		for (Text txtValue : values) {
+			
 			value = txtValue.toString();
 
 			spllitedValues = value.split(TAG_SEPARATOR);

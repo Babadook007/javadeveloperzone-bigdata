@@ -1,0 +1,19 @@
+apply plugin: 'java'
+
+description """Spark WordCount example Using Java"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+/* In this section you declare where to find the dependencies of your project*/
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://mvnrepository.com/artifact/org.apache.spark/spark-core" }
+}
+
+dependencies {
+    
+    compile group: 'org.apache.spark', name: 'spark-core_2.10', version: '2.0.0'
+		   
+}

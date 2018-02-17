@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
-description """HBase Bulk Delete"""
+description """Hadoop Access to RDBMS"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -13,10 +13,6 @@ repositories {
 
 
 dependencies {
-    
-	compile group: 'org.apache.hbase', name: 'hbase-client', version: '0.98.16.1-hadoop2'
-	compile group: 'org.apache.hbase', name: 'hbase-server', version: '0.98.16.1-hadoop2'
-	compile group: 'org.apache.hbase', name: 'hbase-common', version: '0.98.16.1-hadoop2'
 
     compile group: 'org.apache.hadoop', name: 'hadoop-hdfs', version: '2.2.0'
 	compile group: 'org.apache.hadoop', name: 'hadoop-common', version: '2.2.0'

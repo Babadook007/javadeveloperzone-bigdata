@@ -1,4 +1,3 @@
-
 package com.javadeveloperzone.bigdata.hbase.bulkload;
 
 import org.apache.hadoop.conf.Configuration;

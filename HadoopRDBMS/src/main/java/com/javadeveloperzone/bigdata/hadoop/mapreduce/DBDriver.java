@@ -21,7 +21,7 @@ public class DBDriver extends Configured implements Tool{
 		
 		Configuration conf = new Configuration();
 	     DBConfiguration.configureDB(conf,
-	     "com.mysql.jdbc.Driver",   // driver class
+	     "com.mysql.jdbc.Driver",   //MySql driver class
 	     "jdbc:mysql://localhost:3306/javadeveloperzone", // db url
 	     "root",    // user name
 	     "root"); //password

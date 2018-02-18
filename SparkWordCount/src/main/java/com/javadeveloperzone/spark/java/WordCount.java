@@ -1,4 +1,4 @@
-package com.javadeveloperzone.spark;
+package com.javadeveloperzone.spark.java;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -15,6 +15,10 @@ import scala.Tuple2;
 
 public class WordCount {
 	
+	/*For Simplicity,
+	 *We are creating custom Split function, 
+	 *so it makes code easier to understand 
+	 *We are implementing FlatMapFunction.*/
 	static class SplitFunction implements FlatMapFunction<String, String>
 	{
 
@@ -30,7 +34,9 @@ public class WordCount {
 	public static void main(String[] args)
 	{
 
-		SparkConf sparkConf = new SparkConf().setAppName("Simple Application");
+		SparkConf sparkConf = new SparkConf();
+				
+		sparkConf.setAppName("Spark WordCount example using Java");
 		
 		//Setting Master for running it from IDE.
 		sparkConf.setMaster("local[2]");
@@ -41,7 +47,8 @@ public class WordCount {
 		
 		JavaRDD<String> words = textFile.flatMap(new SplitFunction());
 		
-		//
+		/*Below code generates Pair of Word with count as one 
+		 *similar to Mapper in Hadoop MapReduce*/
 		JavaPairRDD<String, Integer> pairs = words
 				.mapToPair(new PairFunction<String, String, Integer>() {
 					public Tuple2<String, Integer> call(String s) {
@@ -49,7 +56,11 @@ public class WordCount {
 					}
 				});
 		
-		JavaPairRDD<String, Integer> counts = pairs.reduceByKey(new Function2<Integer, Integer, Integer>() {
+		/*Below code aggregates Pairs of Same Words with count
+		 *similar to Reducer in Hadoop MapReduce  
+		 */
+		JavaPairRDD<String, Integer> counts = pairs.reduceByKey(
+				new Function2<Integer, Integer, Integer>() {
 					public Integer call(Integer a, Integer b) {
 						return a + b;
 					}

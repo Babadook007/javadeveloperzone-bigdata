@@ -1,0 +1,18 @@
+products:
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> build/classes/scala/main/com/javadeveloperzone/spark/scala/WordCount$$anonfun$1.class
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> build/classes/scala/main/com/javadeveloperzone/spark/scala/WordCount$$anonfun$2.class
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> build/classes/scala/main/com/javadeveloperzone/spark/scala/WordCount$$anonfun$3.class
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> build/classes/scala/main/com/javadeveloperzone/spark/scala/WordCount$.class
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> build/classes/scala/main/com/javadeveloperzone/spark/scala/WordCount.class
+binary dependencies:
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> /home/bigdataspots/.gradle/caches/modules-2/files-2.1/org.apache.spark/spark-core_2.11/2.0.0/c4d04336c142f10eb7e172155f022f86b6d11dd3/spark-core_2.11-2.0.0.jar
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> /home/bigdataspots/.gradle/caches/modules-2/files-2.1/org.scala-lang/scala-library/2.11.8/ddd5a8bced249bedd86fb4578a39b9fb71480573/scala-library-2.11.8.jar
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> /usr/lib/jvm/jdk1.8.0_45/jre/lib/rt.jar
+source dependencies:
+external dependencies:
+class names:
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> com.javadeveloperzone.spark.scala.WordCount
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> com.javadeveloperzone.spark.scala.WordCount$
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> com.javadeveloperzone.spark.scala.WordCount$$anonfun$1
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> com.javadeveloperzone.spark.scala.WordCount$$anonfun$2
+   src/main/scala/com/javadeveloperzone/spark/scala/WordCount.scala -> com.javadeveloperzone.spark.scala.WordCount$$anonfun$3

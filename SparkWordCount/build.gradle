@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'scala'
 
-description """Spark WordCount example Using Java"""
+description """Spark WordCount example"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -15,7 +15,6 @@ repositories {
 
 dependencies {
     
-    /*compile group: 'org.apache.spark', name: 'spark-core_2.10', version: '2.0.0'*/
     compile group: 'org.apache.spark', name: 'spark-core_2.11', version: '2.0.0'
 		   
 }

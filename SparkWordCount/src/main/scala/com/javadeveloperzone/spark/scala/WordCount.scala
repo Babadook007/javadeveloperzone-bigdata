@@ -9,7 +9,7 @@ object WordCount {
    {
      
      /*By default we are setting local so it will run locally with one thread 
-      *Specify: "local[4]" to run locally with 4 cores, OR 
+      *Specify: "local[2]" to run locally with 2 cores, OR 
       *        "spark://master:7077" to run on a Spark standalone cluster */
      
       val sparkContext = new SparkContext("local","Spark WordCount example using Scala",
@@ -21,8 +21,11 @@ object WordCount {
       /*Creating flat map from lines on input file*/
       val words = input.flatMap(line => line.split(" "))
       
+      /*Performing mapping and reducing operation*/
       val counts = words.map(word => (word, 1)).reduceByKey{case (x,y) => x + y}
-          counts.saveAsTextFile(args(1))
+      
+      /*Saving the result file to the location that we have specified as args[1]*/
+      counts.saveAsTextFile(args(1))
       
     }
 }

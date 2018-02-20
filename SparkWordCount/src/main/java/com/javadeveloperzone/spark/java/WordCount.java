@@ -41,9 +41,9 @@ public class WordCount {
 		//Setting Master for running it from IDE.
 		sparkConf.setMaster("local[2]");
 
-		JavaSparkContext sc = new JavaSparkContext(sparkConf);
+		JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
 
-		JavaRDD<String> textFile = sc.textFile(args[0]);
+		JavaRDD<String> textFile = sparkContext.textFile(args[0]);
 		
 		JavaRDD<String> words = textFile.flatMap(new SplitFunction());
 		
@@ -66,8 +66,9 @@ public class WordCount {
 					}
 				});
 
+		/*Saving the result file to the location that we have specified as args[1]*/
 		counts.saveAsTextFile(args[1]);
-		sc.stop();
-		sc.close();
+		sparkContext.stop();
+		sparkContext.close();
 	}
 }

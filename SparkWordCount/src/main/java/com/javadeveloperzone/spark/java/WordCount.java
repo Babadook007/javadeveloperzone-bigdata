@@ -16,9 +16,8 @@ import scala.Tuple2;
 public class WordCount {
 	
 	/*For Simplicity,
-	 *We are creating custom Split function, 
-	 *so it makes code easier to understand 
-	 *We are implementing FlatMapFunction.*/
+	 *We are creating custom Split function,so it makes code easier to understand 
+	 *We are implementing FlatMapFunction interface.*/
 	static class SplitFunction implements FlatMapFunction<String, String>
 	{
 
@@ -43,8 +42,10 @@ public class WordCount {
 
 		JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
 
+		/*Reading input file whose path was specified as args[0]*/
 		JavaRDD<String> textFile = sparkContext.textFile(args[0]);
 		
+		/*Creating RDD of words from each line of input file*/
 		JavaRDD<String> words = textFile.flatMap(new SplitFunction());
 		
 		/*Below code generates Pair of Word with count as one 

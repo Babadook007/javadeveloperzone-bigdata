@@ -18,7 +18,7 @@ object WordCount {
       /*Reading input from File*/
       val input = sparkContext.textFile(args(0))
       
-      /*Creating flat map from lines on input file*/
+      /*Creating RDD from lines on input file*/
       val words = input.flatMap(line => line.split(" "))
       
       /*Performing mapping and reducing operation*/

@@ -16,32 +16,33 @@ public class SparkJoins {
     
     public static void main(String[] args) throws FileNotFoundException {
         
-    	JavaSparkContext sc = new JavaSparkContext(new SparkConf().setAppName("Spark Joins").setMaster("local"));
+    	JavaSparkContext sparkContext = new JavaSparkContext(new SparkConf().setAppName("Spark Joins").setMaster("local"));
         
-        JavaRDD<String> customerInputFile = sc.textFile("/media/ubuntu/data/ml-sample-data/Join-1-CustomerData.csv");
+        JavaRDD<String> customerInputFile = sparkContext.textFile("/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/UserDetails.csv");
         
         JavaPairRDD<String, String> customerPairs = customerInputFile.mapToPair(new PairFunction<String, String, String>() {
             public Tuple2<String, String> call(String s) {
                 String[] customerSplit = s.split(",");
-                return new Tuple2<String, String>(customerSplit[0], customerSplit[1]);
+                return new Tuple2<String, String>(customerSplit[0], customerSplit[1]+","+customerSplit[2]);
             }
         }).distinct();
 
-        JavaRDD<String> transactionInputFile = sc.textFile("/media/ubuntu/data/ml-sample-data/Join-2-Transaction.csv");
+        JavaRDD<String> transactionInputFile = sparkContext.textFile("/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/AddressDetails.csv");
+       
         JavaPairRDD<String, String> transactionPairs = transactionInputFile.mapToPair(new PairFunction<String, String, String>() {
             public Tuple2<String, String> call(String s) {
                 String[] transactionSplit = s.split(",");
-                return new Tuple2<String, String>(transactionSplit[2], transactionSplit[3]+","+transactionSplit[1]);
+                return new Tuple2<String, String>(transactionSplit[0], transactionSplit[1]+","+transactionSplit[2]+","+transactionSplit[3]);
             }
         });
 
         //Default Join operation (Inner join)
         JavaPairRDD<String, Tuple2<String, String>> joinsOutput = customerPairs.join(transactionPairs);
         System.out.println("Joins function Output: "+joinsOutput.collect());
-        joinsOutput.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/InnerJoin");
+        joinsOutput.saveAsTextFile("/home/bigdataspots/Desktop/InnerJoin");
 
         //Left Outer join operation
-        JavaPairRDD<String, Iterable<Tuple2<String, Optional<String>>>> leftJoinOutput = customerPairs.leftOuterJoin(transactionPairs).groupByKey().sortByKey();
+       /* JavaPairRDD<String, Iterable<Tuple2<String, Optional<String>>>> leftJoinOutput = customerPairs.leftOuterJoin(transactionPairs).groupByKey().sortByKey();
         System.out.println("LeftOuterJoins function Output: "+leftJoinOutput.collect());
         leftJoinOutput.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/LeftOuterJoin");
 
@@ -62,7 +63,7 @@ public class SparkJoins {
                         } else {
                             return new Tuple2<String, String>(tuple._1(), "not present");
                         }
-                    });
+                    });*/
         
      /*   JavaPairRDD<String, String> mappedRDD = rddWithJoin
                 .mapToPair(new PairFunction<Tuple2<String,Tuple2<String,Optional<String>>>, String, String>() {
@@ -79,9 +80,12 @@ public class SparkJoins {
 					}
 				});*/
     
-        mappedRDD.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/LeftOuterJoin2");
+//        mappedRDD.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/LeftOuterJoin2");
         
-        sc.stop();
+        sparkContext.stop();
+        
+        sparkContext.close();
+        
     }
 }
 

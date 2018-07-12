@@ -9,12 +9,13 @@ import org.apache.hadoop.mapreduce.Mapper;
 public class WordCountMapper extends Mapper<Object,Text,Text,IntWritable>
 {
 	
-	private static final IntWritable countOne = new IntWritable(1);
+	private static final IntWritable COUNT_ONE = new IntWritable(1);
 	
 	private Text word = new Text();
 	
 	public void map(Object key, Text value, Context context) throws IOException,InterruptedException
 	{
+		/*Splitting each line by space and emitting each word*/
 		String [] words = value.toString().split(" ");
 		
 		for(String string : words)
@@ -22,7 +23,7 @@ public class WordCountMapper extends Mapper<Object,Text,Text,IntWritable>
 			
 			word.set(string);
 			
-			context.write(word, countOne);
+			context.write(word, COUNT_ONE);
 			
 		}
 	}	

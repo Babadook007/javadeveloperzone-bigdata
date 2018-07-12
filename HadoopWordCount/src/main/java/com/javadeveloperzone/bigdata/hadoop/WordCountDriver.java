@@ -30,8 +30,10 @@ public class WordCountDriver extends Configured implements Tool{
 		
 		job.setOutputValueClass(IntWritable.class);
 		
+		/*Passing First argument as Input Path*/
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		
+		/*Passing Second argument as Output Path*/
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		job.waitForCompletion(true);

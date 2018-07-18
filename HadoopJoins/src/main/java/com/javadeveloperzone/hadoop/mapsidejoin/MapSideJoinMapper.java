@@ -15,7 +15,7 @@ public class MapSideJoinMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 	private static HashMap<String, String> departmentMap = new HashMap<String, String>();
 	private BufferedReader bufferedrReader;
-	private String strDeptName = "";
+	private String deptName = "";
 	private Text txtMapOutputKey = new Text("");
 	private Text txtMapOutputValue = new Text("");
 
@@ -78,20 +78,20 @@ public class MapSideJoinMapper extends Mapper<LongWritable, Text, Text, Text> {
 			String arrEmpAttributes[] = value.toString().split("\t");
 
 			try {
-				strDeptName = departmentMap.get(arrEmpAttributes[3].toString());
+				deptName = departmentMap.get(arrEmpAttributes[3].toString());
 			} finally {
-				strDeptName = ((strDeptName.equals(null) || strDeptName
-						.equals("")) ? "NOT-FOUND" : strDeptName);
+				deptName = ((deptName.equals(null) || deptName
+						.equals("")) ? "NOT-FOUND" : deptName);
 			}
 
 			txtMapOutputKey.set(arrEmpAttributes[0].toString());
 
 			txtMapOutputValue.set(arrEmpAttributes[1].toString() + "\t"
 					+ arrEmpAttributes[2].toString() + "\t"
-					+ strDeptName);
+					+ deptName);
 
 		}
 		context.write(txtMapOutputKey, txtMapOutputValue);
-		strDeptName = "";
+		deptName = "";
 	}
 }

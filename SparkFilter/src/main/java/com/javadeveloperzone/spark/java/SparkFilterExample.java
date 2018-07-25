@@ -40,7 +40,7 @@ public class SparkFilterExample {
 	
 	public static void main(String[] args) {
 		
-		SparkConf sparkConf = new SparkConf().setAppName("Apache Spark Java example: Spark Filter");
+		SparkConf sparkConf = new SparkConf().setAppName("Apache Spark Java example - Spark Filter");
 		
 		/*Setting Master for running it from IDE.*/
 		sparkConf.setMaster("local[2]");

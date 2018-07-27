@@ -6,7 +6,6 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.Optional;
 import org.apache.spark.api.java.function.PairFunction;
 
 import scala.Tuple2;
@@ -15,29 +14,38 @@ public class SparkJoins {
 
     
     public static void main(String[] args) throws FileNotFoundException {
+    	
+    	SparkConf sparkConf = new SparkConf().setAppName("Apache Spark Java example - Spark Joins");
         
-    	JavaSparkContext sparkContext = new JavaSparkContext(new SparkConf().setAppName("Spark Joins").setMaster("local"));
+    	/*Setting Master for running it from IDE.*/
+		sparkConf.setMaster("local[2]");
+    	
+    	JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
+    	
+    	
+//    	input File 1 : "/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/UserDetails.csv"
+        JavaRDD<String> userInputFile = sparkContext.textFile(args[0]);
         
-        JavaRDD<String> customerInputFile = sparkContext.textFile("/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/UserDetails.csv");
-        
-        JavaPairRDD<String, String> customerPairs = customerInputFile.mapToPair(new PairFunction<String, String, String>() {
+        JavaPairRDD<String, String> userPairs = userInputFile.mapToPair(new PairFunction<String, String, String>() {
             public Tuple2<String, String> call(String s) {
-                String[] customerSplit = s.split(",");
-                return new Tuple2<String, String>(customerSplit[0], customerSplit[1]+","+customerSplit[2]);
+                String[] userVaues = s.split(",");
+
+                /**/
+                return new Tuple2<String, String>(userVaues[0], userVaues[1]+","+userVaues[2]);
             }
         }).distinct();
 
-        JavaRDD<String> transactionInputFile = sparkContext.textFile("/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/AddressDetails.csv");
+        JavaRDD<String> contactInputFile = sparkContext.textFile("/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/AddressDetails.csv");
        
-        JavaPairRDD<String, String> transactionPairs = transactionInputFile.mapToPair(new PairFunction<String, String, String>() {
+        JavaPairRDD<String, String> contactDetailPairs = contactInputFile.mapToPair(new PairFunction<String, String, String>() {
             public Tuple2<String, String> call(String s) {
-                String[] transactionSplit = s.split(",");
-                return new Tuple2<String, String>(transactionSplit[0], transactionSplit[1]+","+transactionSplit[2]+","+transactionSplit[3]);
+                String[] contactDetailValues = s.split(",");
+                return new Tuple2<String, String>(contactDetailValues[0], contactDetailValues[1]+","+contactDetailValues[2]+","+contactDetailValues[3]);
             }
         });
 
         //Default Join operation (Inner join)
-        JavaPairRDD<String, Tuple2<String, String>> joinsOutput = customerPairs.join(transactionPairs);
+        JavaPairRDD<String, Tuple2<String, String>> joinsOutput = userPairs.join(contactDetailPairs);
         System.out.println("Joins function Output: "+joinsOutput.collect());
         joinsOutput.saveAsTextFile("/home/bigdataspots/Desktop/InnerJoin");
 

@@ -6,6 +6,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.Optional;
 import org.apache.spark.api.java.function.PairFunction;
 
 import scala.Tuple2;
@@ -17,8 +18,9 @@ public class SparkJoins {
     	
     	SparkConf sparkConf = new SparkConf().setAppName("Apache Spark Java example - Spark Joins");
         
-    	/*Setting Master for running it from IDE.*/
-		sparkConf.setMaster("local[2]");
+    	/*Setting Master for running it from IDE.
+    	 *User may set more than 1 if user is running it on multicore processor */
+		sparkConf.setMaster("local[1]");
     	
     	JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
     	
@@ -35,7 +37,8 @@ public class SparkJoins {
             }
         }).distinct();
 
-        JavaRDD<String> contactInputFile = sparkContext.textFile("/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/AddressDetails.csv");
+        // /media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/AddressDetails.csv
+        JavaRDD<String> contactInputFile = sparkContext.textFile(args[1]);
        
         JavaPairRDD<String, String> contactDetailPairs = contactInputFile.mapToPair(new PairFunction<String, String, String>() {
             public Tuple2<String, String> call(String s) {
@@ -44,22 +47,21 @@ public class SparkJoins {
             }
         });
 
-        //Default Join operation (Inner join)
+        /*Default Join operation (Inner join)*/
         JavaPairRDD<String, Tuple2<String, String>> joinsOutput = userPairs.join(contactDetailPairs);
-        System.out.println("Joins function Output: "+joinsOutput.collect());
-        joinsOutput.saveAsTextFile("/home/bigdataspots/Desktop/InnerJoin");
+        
+        // /home/bigdataspots/Desktop/InnerJoin
+        joinsOutput.saveAsTextFile(args[2]+"/InnerJoin");
 
-        //Left Outer join operation
-       /* JavaPairRDD<String, Iterable<Tuple2<String, Optional<String>>>> leftJoinOutput = customerPairs.leftOuterJoin(transactionPairs).groupByKey().sortByKey();
-        System.out.println("LeftOuterJoins function Output: "+leftJoinOutput.collect());
-        leftJoinOutput.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/LeftOuterJoin");
+        /*Left Outer join operation*/
+        JavaPairRDD<String, Iterable<Tuple2<String, Optional<String>>>> leftJoinOutput = userPairs.leftOuterJoin(contactDetailPairs).groupByKey().sortByKey();
+        leftJoinOutput.saveAsTextFile(args[2]+"/LeftOuterJoin");
 
-        //Right Outer join operation
-        JavaPairRDD<String, Iterable<Tuple2<Optional<String>, String>>> rightJoinOutput = customerPairs.rightOuterJoin(transactionPairs).groupByKey().sortByKey();
-        System.out.println("LeftOuterJoins function Output: "+rightJoinOutput.collect());
-        rightJoinOutput.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/RightOuterJoin");
+        /*Right Outer join operation*/
+        JavaPairRDD<String, Iterable<Tuple2<Optional<String>, String>>> rightJoinOutput = userPairs.rightOuterJoin(contactDetailPairs).groupByKey().sortByKey();
+        rightJoinOutput.saveAsTextFile(args[2]+"/RightOuterJoin");
 
-        JavaPairRDD<String, Tuple2<String, Optional<String>>> rddWithJoin = customerPairs.leftOuterJoin(transactionPairs);
+       /* JavaPairRDD<String, Tuple2<String, Optional<String>>> rddWithJoin = userPairs.leftOuterJoin(transactionPairs);
     
         // mapping of join result
         JavaPairRDD<String, String> mappedRDD = rddWithJoin
@@ -88,8 +90,6 @@ public class SparkJoins {
 					}
 				});*/
     
-//        mappedRDD.saveAsTextFile("/home/ubuntu/Desktop/SparkOutput/Joins/LeftOuterJoin2");
-        
         sparkContext.stop();
         
         sparkContext.close();

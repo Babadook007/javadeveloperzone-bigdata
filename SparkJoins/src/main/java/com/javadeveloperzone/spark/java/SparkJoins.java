@@ -61,6 +61,10 @@ public class SparkJoins {
         JavaPairRDD<String, Iterable<Tuple2<Optional<String>, String>>> rightJoinOutput = userPairs.rightOuterJoin(contactDetailPairs).groupByKey().sortByKey();
         rightJoinOutput.saveAsTextFile(args[2]+"/RightOuterJoin");
 
+        sparkContext.stop();
+        
+        sparkContext.close();
+        
        /* JavaPairRDD<String, Tuple2<String, Optional<String>>> rddWithJoin = userPairs.leftOuterJoin(transactionPairs);
     
         // mapping of join result
@@ -90,10 +94,6 @@ public class SparkJoins {
 					}
 				});*/
     
-        sparkContext.stop();
-        
-        sparkContext.close();
-        
     }
 }
 

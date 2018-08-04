@@ -16,7 +16,7 @@ public class SparkJoins {
     
     public static void main(String[] args) throws FileNotFoundException {
     	
-    	SparkConf sparkConf = new SparkConf().setAppName("Apache Spark Java example - Spark Joins");
+    	SparkConf sparkConf = new SparkConf().setAppName("Apache Spark example - Spark Joins");
         
     	/*Setting Master for running it from IDE.
     	 *User may set more than 1 if user is running it on multicore processor */
@@ -24,23 +24,32 @@ public class SparkJoins {
     	
     	JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
     	
-    	
-//    	input File 1 : "/media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/UserDetails.csv"
-        JavaRDD<String> userInputFile = sparkContext.textFile(args[0]);
+        JavaRDD<String> userInputRDD = sparkContext.textFile(args[0]);
         
-        JavaPairRDD<String, String> userPairs = userInputFile.mapToPair(new PairFunction<String, String, String>() {
-            public Tuple2<String, String> call(String s) {
+        /*Method 1 :: We are creating PairFunction first, in which each Tuple2 will contain the Key, Value like,
+         *KEY :: UserID  
+         *VALUE :: <FirstName,LastName> */
+        PairFunction<String, String, String> userKeyValueData = new PairFunction<String, String, String>() {
+        	
+        	public Tuple2<String, String> call(String s) {
                 String[] userVaues = s.split(",");
 
-                /**/
                 return new Tuple2<String, String>(userVaues[0], userVaues[1]+","+userVaues[2]);
             }
-        }).distinct();
-
-        // /media/bigdataspots/data/prashant/tech-docs/spark/sample-input/2/AddressDetails.csv
-        JavaRDD<String> contactInputFile = sparkContext.textFile(args[1]);
+		};
+	
+		/*Once the userKeyValue data is ready, we are mapping it using mapToPair function with distinct values
+		 *which returns JavaPairRDD.*/
+		JavaPairRDD<String,String> userPairs = userInputRDD.mapToPair(userKeyValueData).distinct(); 
+        
+        JavaRDD<String> addressInputRDD = sparkContext.textFile(args[1]);
        
-        JavaPairRDD<String, String> contactDetailPairs = contactInputFile.mapToPair(new PairFunction<String, String, String>() {
+        /*Method 2 :: We are directly creating JavaPairRDD using mapToPair function and we are passing the new PairFunction
+         *with its definition which is returning a Tuple2 object which contains,
+         *KEY :: AddressID  
+         *VALUE :: <City,State,Country> */
+        
+        JavaPairRDD<String, String> contactDetailPairs = addressInputRDD.mapToPair(new PairFunction<String, String, String>() {
             public Tuple2<String, String> call(String s) {
                 String[] contactDetailValues = s.split(",");
                 return new Tuple2<String, String>(contactDetailValues[0], contactDetailValues[1]+","+contactDetailValues[2]+","+contactDetailValues[3]);
@@ -50,15 +59,19 @@ public class SparkJoins {
         /*Default Join operation (Inner join)*/
         JavaPairRDD<String, Tuple2<String, String>> joinsOutput = userPairs.join(contactDetailPairs);
         
-        // /home/bigdataspots/Desktop/InnerJoin
+        /*Storing the result of inner Join values*/
         joinsOutput.saveAsTextFile(args[2]+"/InnerJoin");
 
         /*Left Outer join operation*/
         JavaPairRDD<String, Iterable<Tuple2<String, Optional<String>>>> leftJoinOutput = userPairs.leftOuterJoin(contactDetailPairs).groupByKey().sortByKey();
+        
+        /*Storing values of Left Outer join*/
         leftJoinOutput.saveAsTextFile(args[2]+"/LeftOuterJoin");
 
         /*Right Outer join operation*/
         JavaPairRDD<String, Iterable<Tuple2<Optional<String>, String>>> rightJoinOutput = userPairs.rightOuterJoin(contactDetailPairs).groupByKey().sortByKey();
+        
+        /*Storing values of Right Outer join*/
         rightJoinOutput.saveAsTextFile(args[2]+"/RightOuterJoin");
 
         sparkContext.stop();

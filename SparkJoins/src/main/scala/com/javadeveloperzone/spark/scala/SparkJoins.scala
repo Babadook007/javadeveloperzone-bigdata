@@ -48,7 +48,7 @@ object SparkJoins {
       /*Storing values of Right Outer join*/
       rightOuterJoin.saveAsTextFile(args(2)+"/RightOuterJoin")
       
-      sparkContext.stop()
+      sparkContext.stop();
       
     }
 }

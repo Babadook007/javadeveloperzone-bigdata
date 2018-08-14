@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'scala'
 
-description """Apache Spark example - Spark Joins"""
+description """Spark Joins"""
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

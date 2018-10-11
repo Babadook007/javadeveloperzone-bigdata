@@ -12,7 +12,7 @@ object SparkJoins {
       *Specify: "local[2]" to run locally with 2 cores, OR 
       *        "spark://master:7077" to run on a Spark standalone cluster */
      
-      val sparkContext = new SparkContext("local","Apache Spark example - Spark Joins",
+      val sparkContext = new SparkContext("local","Spark Joins",
           System.getenv("SPARK_HOME"))
       
       /*Reading input from User Data File*/

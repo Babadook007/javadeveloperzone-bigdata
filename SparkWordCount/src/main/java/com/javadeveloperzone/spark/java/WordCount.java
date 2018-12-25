@@ -24,8 +24,8 @@ public class WordCount {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Iterator<String> call(String s) {
-			return Arrays.asList(s.split(" ")).iterator();
+		public Iterable<String> call(String s) {
+			return Arrays.asList(s.split(" "));
 		}
 		
 	}
@@ -38,12 +38,16 @@ public class WordCount {
 		sparkConf.setAppName("Spark WordCount example using Java");
 		
 		//Setting Master for running it from IDE.
-		sparkConf.setMaster("local[2]");
+//		sparkConf.setMaster("local[2]");
+		sparkConf.setMaster("spark://quickstart.cloudera:7077");
+
+
 
 		JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
 
 		/*Reading input file whose path was specified as args[0]*/
-		JavaRDD<String> textFile = sparkContext.textFile(args[0]);
+//		JavaRDD<String> textFile = sparkContext.textFile(args[0]);
+        JavaRDD<String> textFile = sparkContext.textFile("E:\\logs\\MMX3\\SenderIdWhitelist\\SenderIdWhitelist.log.2018-03-07");
 		
 		/*Creating RDD of words from each line of input file*/
 		JavaRDD<String> words = textFile.flatMap(new SplitFunction());
@@ -68,7 +72,8 @@ public class WordCount {
 				});
 
 		/*Saving the result file to the location that we have specified as args[1]*/
-		counts.saveAsTextFile(args[1]);
+//		counts.saveAsTextFile(args[1]);
+        counts.saveAsTextFile("E:\\learn\\output\\spark\\wclocal");
 		sparkContext.stop();
 		sparkContext.close();
 	}

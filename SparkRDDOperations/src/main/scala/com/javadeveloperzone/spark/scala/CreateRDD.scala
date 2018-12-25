@@ -34,5 +34,6 @@ object CreateRDD{
       
       val likes = sparkContext.parallelize(List("spark", "I like spark"))
       
+      
     }
 }

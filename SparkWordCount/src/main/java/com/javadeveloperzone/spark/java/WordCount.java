@@ -23,9 +23,14 @@ public class WordCount {
 
 		private static final long serialVersionUID = 1L;
 
-		@Override
+		/*@Override
 		public Iterable<String> call(String s) {
 			return Arrays.asList(s.split(" "));
+		}*/
+		
+		@Override
+		public Iterator<String> call(String s) {
+			return Arrays.asList(s.split(" ")).iterator();
 		}
 		
 	}

@@ -30,6 +30,9 @@ public class FunctionExample {
         SparkConf sparkConf = new SparkConf().setAppName("Function Example using Java");
 
         sparkConf.setMaster("local[1]");
+//        sparkConf.setMaster("spark://192.168.0.101:7077");
+//        sparkConf.setMaster("spark://quickstart.cloudera:7077");
+
 
         JavaSparkContext sparkContext = new JavaSparkContext(sparkConf);
 

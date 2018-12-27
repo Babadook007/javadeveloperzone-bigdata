@@ -27,7 +27,7 @@ public class FunctionExample {
 
     public static void main(String[] args) {
 
-        SparkConf sparkConf = new SparkConf().setAppName("Function Example using Java");
+        SparkConf sparkConf = new SparkConf().setAppName("Passing Function to Spark Example using Java");
 
         sparkConf.setMaster("local[1]");
 //        sparkConf.setMaster("spark://192.168.0.101:7077");

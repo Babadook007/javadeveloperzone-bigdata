@@ -6,6 +6,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class FlatMapExample {
@@ -18,11 +19,15 @@ public class FlatMapExample {
 
         private static final long serialVersionUID = 1L;
 
-        @Override
+        /*@Override
         public Iterable<String> call(String input) {
             return Arrays.asList(input.split(" "));
-        }
+        }*/
 
+        @Override
+        public Iterator<String> call(String input) {
+            return Arrays.asList(input.split(" ")).iterator();
+        }
     }
 
 

@@ -19,6 +19,7 @@ public class DBDriver extends Configured implements Tool{
 	public int run(String[] args) throws Exception {
 		
 		Configuration conf = new Configuration();
+		
 	     DBConfiguration.configureDB(conf,
 	     "com.mysql.jdbc.Driver",   // driver class
 	     "jdbc:mysql://192.168.0.23:3306/retail", // db url

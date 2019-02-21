@@ -1,5 +1,5 @@
-In this article we are going to explain how to read the Database table using Hadoop MapReduce.
-Now a days in ETL world reading the Database and processing millions of records is perhaps the principle operation.
+In this article we are going to explain how to access the Database using Hadoop MapReduce.
+Nowadays, in ETL world reading the Database and processing millions of records is perhaps the principle operation.
 So in our hadoop tutorial journey, we are going to explain simple way to read database table using Hadoop MapReduce.
 
 Consider a hypothetical case where we are having an online retail store's database and we are having a  
@@ -7,14 +7,14 @@ User table which contains millions of rows and we are interested in reading that
 Mapreduce.
 
 For sake of simplicity we are going to read the table and we will emmit the records in HDFS as key value pairs.
-So this Hadoop MapReduce tutorial serves as a base for reading RDBMS using Hadoop MapReduce in which our source is MySQL database
+So this Hadoop MapReduce tutorial serves as a base for reading RDBMS using Hadoop MapReduce where our data source is MySQL database
 and sink is HDFS.
 
 -----User table definition---
 
 In our User table we are having 3 columns named as, user_id, user_name, department
 
-Hadoop does provides various datatypes like IntWritable,FloatWritable, DoubleWritable etc,
+Hadoop does provides various data types like IntWritable,FloatWritable, DoubleWritable etc,
 but in our case we are going to implement custom InputWritable which will enable us to read the data rows from Database table.
 In order to implement Custom input writable, we have to implement DBWritable interface.
 

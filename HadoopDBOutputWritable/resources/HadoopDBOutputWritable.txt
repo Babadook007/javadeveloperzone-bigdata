@@ -1,0 +1,28 @@
+In our previous article, we explained how to read database table using Hadoop MapReduce, 
+in this article we are going to explain how to write to database table using Hadoop MapReduce 
+
+Consider a case where we are having text files in HDFS which contains the product details of an online 
+retail store and the files contains millions of rows, so now we are interested in loading those records into database. 
+so we are trying to load the data from Text Files(HDFDS) to Database using Hadoop MapReduce.
+
+So it is Hadoop MapReduce tutorial serves as a base for reading text files using Hadoop MapReduce and storing the data in database table.
+
+-----Product table definition---
+In order to load the data in product table, we are defining a product table using following DDL query in MySql.
+
+In our Product table we are having 3 columns named as, stock_code, description, available_quantity
+
+Hadoop does provides various datatypes like IntWritable,FloatWritable, DoubleWritable etc,
+but in our case we are going to implement custom OutputWritable which will enable us to write 
+the data rows to Database table.
+In order to implement Custom Output writable, we have to implement DBWritable interface.
+
+so, our DBOutputWritable will look like following code,
+
+In order to make the Database table writing simpler, we are just writing the Product table using Mapper class.
+
+Reading RDBMS required database connection, so we need to place the relevant jar file to Hadoop's lib folder,
+so in our case we have copied the mysql-connector-java-5.1.16.jar file to HADOOP's lib folder.
+Once you copied the jar file, you need to restart the cluster.
+
+so now we need to build the Jar file with dependencies and then we can run the job using Hadoop jar command.

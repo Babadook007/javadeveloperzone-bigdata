@@ -3,7 +3,7 @@ in this article we are going to explain how to write to database table using Had
 
 Consider a case where we are having text files in HDFS which contains the product details of an online 
 retail store and the files contains millions of rows, so now we are interested in loading those records into database. 
-so we are trying to load the data from Text Files(HDFDS) to Database using Hadoop MapReduce.
+so we are trying to write the data from Text Files(HDFS) to Database using Hadoop MapReduce.
 
 So it is Hadoop MapReduce tutorial serves as a base for reading text files using Hadoop MapReduce and storing the data in database table.
 

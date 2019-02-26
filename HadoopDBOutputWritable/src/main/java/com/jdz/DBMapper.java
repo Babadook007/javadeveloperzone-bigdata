@@ -1,25 +1,22 @@
 package com.jdz;
 
-import java.io.IOException;
-
 import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class DBMapper extends Mapper<LongWritable, DBInputWritable, Text, NullWritable> {
+public class DBMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 
-	protected void map(LongWritable id, DBInputWritable value, Context ctx) {
+	@Override
+	protected void map(LongWritable id, Text value, Context context) {
 		try 
 		{
-			String userDetails = value.getUserName()+","+value.getDepartment();
-			ctx.write(new Text(userDetails), NullWritable.get());
-
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		} catch (InterruptedException interruptedException) {
-			interruptedException.printStackTrace();
+			String[] productValues = value.toString().split(",");
+			
+			context.write(new Text(productValues[0]),value);	
+		
+		} catch (Exception exception) {
+			exception.printStackTrace();
 		}
 	}
 }

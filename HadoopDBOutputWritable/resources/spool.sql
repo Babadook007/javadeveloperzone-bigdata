@@ -11,3 +11,10 @@ insert into `retail`.`users`(`user_name`,`department`) values ('Jayesh Patel','H
 insert into `retail`.`users`(`user_name`,`department`) values ('Pratik S','Java');
 insert into `retail`.`users`(`user_name`,`department`) values ('Prakash P','Web Development');
 insert into `retail`.`users`(`user_name`,`department`) values ('Jagdish K','Designing');
+
+
+CREATE TABLE `retail`.`product` (
+		  `stockcode` VARCHAR(45) NOT NULL,
+		  `description` VARCHAR(45) NOT NULL,
+		  `quantity` INT,
+		  PRIMARY KEY (`stockcode`));

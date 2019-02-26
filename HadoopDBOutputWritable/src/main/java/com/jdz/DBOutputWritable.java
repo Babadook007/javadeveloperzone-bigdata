@@ -12,24 +12,30 @@ import org.apache.hadoop.mapreduce.lib.db.DBWritable;
 
 public class DBOutputWritable implements Writable, DBWritable{
 	
-	int count;
-	String userName;
+	int quantity;
+	String stockCode;
+	String description;
 	
 	public DBOutputWritable(){}
-	public DBOutputWritable(String userName, int count)
+	public DBOutputWritable(String stockCode,String description, int quantity)
 	{
-		this.userName=userName;
-		this.count = count;
+		this.stockCode=stockCode;
+		this.description = description;
+		this.quantity=quantity;
 	}
 
 	public void write(PreparedStatement statement) throws SQLException {
-		statement.setString(1, userName);
-		statement.setInt(2, count);
+		
+		statement.setString(1, stockCode);
+		statement.setString(2, description);
+		statement.setInt(3, quantity);
 	}
 
 	public void readFields(ResultSet resultSet) throws SQLException {
-		userName = resultSet.getString(1);
-		count = resultSet.getInt(2);
+		
+		stockCode = resultSet.getString(1);
+		description = resultSet.getString(2);
+		quantity=resultSet.getInt(3);
 	}
 
 	public void write(DataOutput out) throws IOException {

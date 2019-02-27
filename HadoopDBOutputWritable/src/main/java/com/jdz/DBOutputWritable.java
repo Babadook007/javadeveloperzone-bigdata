@@ -12,9 +12,9 @@ import org.apache.hadoop.mapreduce.lib.db.DBWritable;
 
 public class DBOutputWritable implements Writable, DBWritable{
 	
-	int quantity;
-	String stockCode;
-	String description;
+	private int quantity;
+	private String stockCode;
+	private String description;
 	
 	public DBOutputWritable(){}
 	public DBOutputWritable(String stockCode,String description, int quantity)

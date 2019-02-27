@@ -12,9 +12,13 @@ public class DBReducer extends Reducer<Text,Text,DBOutputWritable,NullWritable>{
 	protected void reduce(Text key, Iterable<Text> values,
 			Reducer<Text, Text, DBOutputWritable, NullWritable>.Context context) throws IOException, InterruptedException {
 		
-		Text value = values.iterator().next();
+		Text finalValue=null;
 		
-		String[] productValues = value.toString().split(",");
+		for(Text value : values){
+			finalValue=value;
+		}
+		
+		String[] productValues = finalValue.toString().split(",");
 		
 		DBOutputWritable productRecord = new DBOutputWritable(productValues[0], productValues[1], Integer.parseInt(productValues[2]));
 		

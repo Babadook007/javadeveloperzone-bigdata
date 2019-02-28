@@ -33,9 +33,9 @@ public class DBOutputWritable implements Writable, DBWritable{
 
 	public void readFields(ResultSet resultSet) throws SQLException {
 		
-		stockCode = resultSet.getString(1);
-		description = resultSet.getString(2);
-		quantity=resultSet.getInt(3);
+		this.stockCode = resultSet.getString(1);
+		this.description = resultSet.getString(2);
+		this.quantity=resultSet.getInt(3);
 	}
 
 	public void write(DataOutput out) throws IOException {
